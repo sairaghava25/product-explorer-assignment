@@ -19,11 +19,15 @@ export default function HomePage() {
   }, [products]);
 
   const visibleProducts = products.filter((product) => {
-    if (category !== "all") {
-      return product.category === category;
-    }
-    return product.title.includes(search);
-  });
+  const matchesSearch = product.title
+    .toLowerCase()
+    .includes(search.toLowerCase());
+
+  const matchesCategory =
+    category === "all" || product.category === category;
+
+  return matchesSearch && matchesCategory;
+});
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
